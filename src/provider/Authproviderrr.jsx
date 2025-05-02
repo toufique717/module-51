@@ -10,6 +10,7 @@ import auth from  '../firebase/firebase.config.js'
 const Authproviderrr = ({children}) => {
 
     const [user,setuser]  = useState(null)
+    const [loading,setloading] = useState(true)
 
     const signinuser = (email,password) =>
     {
@@ -18,12 +19,17 @@ const Authproviderrr = ({children}) => {
 
     const createuser = (email,password) =>
         {
+
+          setloading(true);
           return createUserWithEmailAndPassword(auth, email, password);
+           
         }
 
         const logout = ()=>
         {
+            setloading(true);
             return signOut(auth);
+             
         }
 
 
@@ -31,8 +37,10 @@ const Authproviderrr = ({children}) => {
             {
               const unsubscribe =  onAuthStateChanged(auth,currentUser=>
                 {
-                    setuser(currentUser);
+                     
                     console.log('observing currentuser',currentUser)
+                    setuser(currentUser)
+                    setloading(true);
                 }
                 )
                 return ()=>
@@ -58,7 +66,7 @@ const Authproviderrr = ({children}) => {
                 },[])
 
 
-    const authinfo = {user,createuser,signinuser,logout}
+    const authinfo = {user,createuser,signinuser,logout,loading}
     return (
          <Authcontext.Provider value = {authinfo}>
 

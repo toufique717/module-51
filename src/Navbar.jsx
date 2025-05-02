@@ -20,7 +20,9 @@ const Navbar = () => {
      
     <li><NavLink to="/login">Login</NavLink></li>
 
-    <li><NavLink to="/register">register</NavLink></li>
+    <li><NavLink to="/register">Register</NavLink></li>
+
+    <li><NavLink to="/order">Order</NavLink></li>
     </>
     return (
         <div className="navbar bg-base-100">
