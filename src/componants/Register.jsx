@@ -5,7 +5,12 @@ import Authproviderrr, { Authcontext } from '../provider/Authproviderrr'
 
 const Register = () => {
 
- const createuser = useContext(Authcontext);
+ //const createuser = useContext(Authcontext);
+
+ const { createuser } = useContext(Authcontext);
+
+  
+
  //console.log(userinfo);
 
     const handleRegister = (e) => {
