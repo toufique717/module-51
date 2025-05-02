@@ -1,34 +1,39 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Authcontext } from '../provider/Authproviderrr';
 
 const Login = () => {
-
-  const {signinuser} = useContext(Authcontext);
+  const { signinuser, signinwithgoogle } = useContext(Authcontext);
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
 
-    signinuser(email,password)
-    .then(result=>
-    {
-      console.log(result.user)
-    }
-    )
-    .catch(error=>console.error())
+    signinuser(email, password)
+      .then(result => {
+        console.log(result.user);
+        e.target.reset();
+        navigate('/');
+      })
+      .catch(error => console.error(error));
+  };
 
-
+  const handleGoogle = () => {
+    signinwithgoogle()
+      .then(result => {
+        console.log(result.user);
+        //navigate('/');
+      })
+      .catch(error => console.error(error));
   };
 
   return (
     <div className="hero bg-base-200 min-h-screen">
-      <div className="hero-content flex-col ">
-        <div className="text-center ">
+      <div className="hero-content flex-col">
+        <div className="text-center">
           <h1 className="text-5xl font-bold">Login now!</h1>
-           
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <form onSubmit={handleLogin} className="card-body">
@@ -52,7 +57,8 @@ const Login = () => {
             </div>
           </form>
 
-          <p>New here ? <Link to="/register"> <a className="link link-primary">Register</a></Link></p>
+          <p>New here? <Link to="/register" className="link link-primary">Register</Link></p>
+          <p onClick={handleGoogle} className="link link-primary cursor-pointer">Continue with Google</p>
         </div>
       </div>
     </div>
